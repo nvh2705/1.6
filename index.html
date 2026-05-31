@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chúc mừng 1/6</title>
+<style>
+    body, html {
+        margin:0; padding:0;
+        width:100%; height:100%;
+        overflow:hidden;
+        font-family: 'Segoe UI', sans-serif;
+        background:black;
+        text-align:center;
+        color:white;
+    }
+    #scene, #blackScreen, #finalScreen {
+        position:absolute; top:0; left:0;
+        width:100%; height:100%;
+        display:flex; justify-content:center; align-items:center;
+        flex-direction:column;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    #scene img {
+        width: 90%;
+        max-width: 400px;
+        transition: transform 0.5s ease;
+        border-radius:10px;
+        box-shadow:0 0 20px rgba(255,255,255,0.3);
+    }
+    #question {
+        display:none;
+        font-size:1.5em;
+        margin-top:20px;
+        line-height:1.4em;
+    }
+    #buttons {
+        display:flex; gap:10px; margin-top:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+    button {
+        padding:10px 20px;
+        font-size:1em;
+        cursor:pointer;
+        position:relative;
+        background: #ff4081;
+        border:none;
+        border-radius:8px;
+        color:white;
+        box-shadow:0 0 10px #fff;
+    }
+    #blackScreen {
+        background:black;
+        display:none;
+        font-size:2em;
+        justify-content:center;
+        align-items:center;
+    }
+    #finalScreen {
+        display:none;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        color:white;
+        background:#4a148c;
+        padding: 10px;
+    }
+    @keyframes fireworks {
+        0% { transform: scale(0.1); opacity:1; }
+        100% { transform: scale(1.5); opacity:0; }
+    }
+    .firework {
+        position:absolute;
+        width:15px; height:15px;
+        border-radius:50%;
+        animation: fireworks 1s ease-out forwards;
+    }
+</style>
+</head>
+<body>
+
+<div id="scene">
+    <img id="bgImage" src="1.png" alt="Hoàng tử quỳ cầu hôn công chúa">
+    <div id="question">Bạn có muốn xem người tui yêu khônggg?</div>
+    <div id="buttons">
+        <button id="yesBtn">Có</button>
+        <button id="noBtn">Không</button>
+    </div>
+</div>
+
+<div id="blackScreen"></div>
+
+<div id="finalScreen">
+    <h1>Tadaaa iuuu nhìu lắmmm</h1>
+    <div id="fireworksContainer"></div>
+    <h1>Nhân ngày 1/6 chúc a bé luôn hạnh phúc, mỉm cười nhiều hơn và càng ngày càng thành công nè, nhiều xô hơn nhaa 🫶 lovee u 😘!</h1>
+</div>
+
+<script>
+const bgImage = document.getElementById('bgImage');
+const question = document.getElementById('question');
+const buttons = document.getElementById('buttons');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const blackScreen = document.getElementById('blackScreen');
+const finalScreen = document.getElementById('finalScreen');
+const fireworksContainer = document.getElementById('fireworksContainer');
+
+// Khi tap ảnh → ảnh biến mất, hiện câu hỏi + nút
+bgImage.addEventListener('click', () => {
+    bgImage.style.display = 'none';
+    question.style.display = 'block';
+    buttons.style.display = 'flex';
+});
+
+// Nhấn Có → màn hình đen 5s → hiện finalScreen
+yesBtn.addEventListener('click', () => {
+    document.getElementById('scene').style.display = 'none';
+    blackScreen.style.display = 'flex';
+    setTimeout(() => {
+        blackScreen.style.display = 'none';
+        finalScreen.style.display = 'flex';
+        for(let i=0;i<20;i++){
+            let fw = document.createElement('div');
+            fw.className='firework';
+            fw.style.left = Math.random()*100 + '%';
+            fw.style.top = Math.random()*100 + '%';
+            fw.style.background = ['red','yellow','blue','green','orange'][Math.floor(Math.random()*5)];
+            fireworksContainer.appendChild(fw);
+        }
+    },5000);
+});
+
+// Nhấn Không → nút nhảy lung tung
+noBtn.addEventListener('mouseover', () => {
+    const x = Math.random() * (window.innerWidth - 80);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.position='absolute';
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+});
+</script>
+
+</body>
+</html>
